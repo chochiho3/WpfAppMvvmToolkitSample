@@ -1,29 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfAppListBindingTest
 {
-    internal partial class SubWindowViewModel : ObservableValidator
+    internal partial class SubWindow2ViewModel : ObservableValidator
     {
-        private readonly ClientTcp _clientTcp;
-
         [ObservableProperty]
         private string _recvMsg;
 
-        public SubWindowViewModel(ClientTcp clientTcp)
+        public SubWindow2ViewModel()
         {
             WeakReferenceMessenger.Default.Register<string>(
                 this,
                 (r, m) =>
                 {
-                    RecvMsg += m;
+                    RecvMsg += $":{m}";
                 }
             );
-            _clientTcp = clientTcp;
-            _clientTcp.OnRecvMsg += (s, e) => RecvMsg += e;
         }
     }
 }

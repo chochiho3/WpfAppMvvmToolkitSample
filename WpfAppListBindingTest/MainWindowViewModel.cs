@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WpfAppListBindingTest
 {
@@ -34,6 +35,9 @@ namespace WpfAppListBindingTest
         private int? _port;
 
         public string FullAddress => $"{IpAddress}:{Port}";
+
+        [ObservableProperty]
+        private FrameworkElement _subContent;
 
         public MainWindowViewModel(ClientTcp tcpClient)
         {
@@ -94,6 +98,22 @@ namespace WpfAppListBindingTest
         private async Task SendMessage(string msg)
         {
             WeakReferenceMessenger.Default.Send<string>(msg);
+        }
+
+        private int _subContentIndex = 0;
+
+        [ICommand]
+        private async Task ChangeSubContent()
+        {
+            if (_subContentIndex % 2 == 0)
+            {
+                SubContent = new SubWindow();
+            }
+            else
+            {
+                SubContent = new SubWindow2();
+            }
+            _subContentIndex++;
         }
     }
 

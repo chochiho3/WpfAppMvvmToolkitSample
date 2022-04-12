@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfAppListBindingTest
 {
-    internal class ClientTcp
+    public class ClientTcp
     {
         private ClientTcpSample? _clientTcp;
 
