@@ -32,6 +32,7 @@ namespace WpfAppListBindingTest
 
             //view models
             services.AddTransient<MainWindowViewModel>();
+            services.AddTransient<SubWindowViewModel>();
 
             return services.BuildServiceProvider();
         }

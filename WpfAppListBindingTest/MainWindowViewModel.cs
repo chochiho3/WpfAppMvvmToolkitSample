@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 using System;
 using System.Collections.ObjectModel;
@@ -36,8 +37,9 @@ namespace WpfAppListBindingTest
 
         public MainWindowViewModel(ClientTcp tcpClient)
         {
-            _logObjs = new();
             _tcpClient = tcpClient;
+
+            _logObjs = new();
             _tcpClient.OnRecvMsg += (sender, e) =>
                 App.Current.Dispatcher.BeginInvoke(
                     () =>
@@ -78,6 +80,21 @@ namespace WpfAppListBindingTest
 
         [ICommand]
         private void DeleteOneItem(LogObj target) => LogObjs.Remove(target);
+
+        private int cnt = 0;
+
+        [ICommand]
+        private async Task<string> CommandReturn()
+        {
+            await Task.Delay(1000);
+            return $"Hello!!! 1000 ms 지났다아아아!!!! {cnt++}";
+        }
+
+        [ICommand]
+        private async Task SendMessage(string msg)
+        {
+            WeakReferenceMessenger.Default.Send<string>(msg);
+        }
     }
 
     public partial class LogObj : ObservableValidator
