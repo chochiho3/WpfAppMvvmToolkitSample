@@ -8,10 +8,10 @@ namespace WpfAppListBindingTest
 {
     internal partial class SubWindowViewModel : ObservableValidator
     {
-        private readonly ClientTcp _clientTcp;
+        readonly ClientTcp _clientTcp;
 
         [ObservableProperty]
-        private string _recvMsg;
+        string _recvMsg;
 
         public SubWindowViewModel(ClientTcp clientTcp)
         {

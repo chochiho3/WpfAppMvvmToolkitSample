@@ -16,28 +16,28 @@ namespace WpfAppListBindingTest
     //internal partial class MainWindowViewModel
     internal partial class MainWindowViewModel : ObservableValidator
     {
-        private readonly ClientTcp _tcpClient;
+        readonly ClientTcp _tcpClient;
 
         [ObservableProperty]
-        private ObservableCollection<LogObj> _logObjs;
+        ObservableCollection<LogObj> _logObjs;
 
         [ObservableProperty]
         [Required]
         [AlsoNotifyChangeFor(nameof(FullAddress))]
         [AlsoNotifyCanExecuteFor(nameof(ConnectToServerCommand))]
         [CustomValidation(typeof(ValidatorBundle), nameof(ValidatorBundle.CustomValidation))]
-        private string _ipAddress;
+        string _ipAddress;
 
         [ObservableProperty]
         [Required]
         [AlsoNotifyChangeFor(nameof(FullAddress))]
         [AlsoNotifyCanExecuteFor(nameof(ConnectToServerCommand))]
-        private int? _port;
+        int? _port;
 
         public string FullAddress => $"{IpAddress}:{Port}";
 
         [ObservableProperty]
-        private FrameworkElement _subContent;
+        FrameworkElement _subContent;
 
         public MainWindowViewModel(ClientTcp tcpClient)
         {
@@ -61,16 +61,16 @@ namespace WpfAppListBindingTest
                 );
         }
 
-        private bool IsCanTryConnect => IPAddress.TryParse(_ipAddress, out var temp) && _port > 0;
+        bool IsCanTryConnect => IPAddress.TryParse(_ipAddress, out var temp) && _port > 0;
 
         [ICommand]
-        private void ClearLogs() => LogObjs.Clear();
+        void ClearLogs() => LogObjs.Clear();
 
         [ICommand]
-        private void CheckValidation() => ValidateAllProperties();
+        void CheckValidation() => ValidateAllProperties();
 
         [ICommand(CanExecute = nameof(IsCanTryConnect))]
-        private async Task ConnectToServer()
+        async Task ConnectToServer()
         {
             ValidateAllProperties();
             if (!HasErrors)
@@ -80,30 +80,30 @@ namespace WpfAppListBindingTest
         }
 
         [ICommand]
-        private async Task DisconnectFromServer() => await _tcpClient.ServiceStop();
+        async Task DisconnectFromServer() => await _tcpClient.ServiceStop();
 
         [ICommand]
-        private void DeleteOneItem(LogObj target) => LogObjs.Remove(target);
+        void DeleteOneItem(LogObj target) => LogObjs.Remove(target);
 
-        private int cnt = 0;
+        int cnt = 0;
 
         [ICommand]
-        private async Task<string> CommandReturn()
+        async Task<string> CommandReturn()
         {
             await Task.Delay(1000);
             return $"Hello!!! 1000 ms 지났다아아아!!!! {cnt++}";
         }
 
         [ICommand]
-        private async Task SendMessage(string msg)
+        async Task SendMessage(string msg)
         {
             WeakReferenceMessenger.Default.Send<string>(msg);
         }
 
-        private int _subContentIndex = 0;
+        int _subContentIndex = 0;
 
         [ICommand]
-        private async Task ChangeSubContent()
+        async Task ChangeSubContent()
         {
             if (_subContentIndex % 2 == 0)
             {
@@ -120,16 +120,16 @@ namespace WpfAppListBindingTest
     public partial class LogObj : ObservableValidator
     {
         [ObservableProperty]
-        private DateTime _recordTime;
+        DateTime _recordTime;
 
         [ObservableProperty]
-        private string _message;
+        string _message;
 
         [ObservableProperty]
-        private string _writer;
+        string _writer;
 
         [ICommand]
-        private async Task AddString()
+        async Task AddString()
         {
             await Task.Delay(1000);
             Message += "#TEST";

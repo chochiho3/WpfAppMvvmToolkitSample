@@ -12,7 +12,7 @@ namespace WpfAppListBindingTest
     internal partial class SubWindow2ViewModel : ObservableValidator
     {
         [ObservableProperty]
-        private string _recvMsg;
+        string _recvMsg;
 
         public SubWindow2ViewModel()
         {

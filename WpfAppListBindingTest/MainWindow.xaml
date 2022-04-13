@@ -47,7 +47,7 @@
                 </Button>
 
                 <TextBox Name="SubWindowMsg" materialDesign:HintAssist.Hint="sub window에 보낼 메세지를 입력하세요." />
-                <Button Command="{Binding SendMessageCommand}" CommandParameter="{Binding ElementName=SubWindowMsg, Path=Text}">Send</Button>
+                <Button Command="{Binding SendMessageCommand}" CommandParameter="{Binding ElementName=SubWindowMsg, Path=Text}">Send To SubWindow</Button>
             </StackPanel>
         </materialDesign:Card>
         <ListBox Grid.Row="1" ItemsSource="{Binding LogObjs}">
