@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,6 +39,9 @@ namespace WpfAppListBindingTest
 
         [ObservableProperty]
         FrameworkElement _subContent;
+
+        [ObservableProperty]
+        string eventString;
 
         public MainWindowViewModel(ClientTcp tcpClient)
         {
@@ -100,20 +104,20 @@ namespace WpfAppListBindingTest
             WeakReferenceMessenger.Default.Send<string>(msg);
         }
 
-        int _subContentIndex = 0;
+        [ICommand]
+        private async Task SetSubView(string typeName)
+        {
+            await Task.Delay(1000);
+            //Type만 가지고 동적으로 객체생성해주는 Activator
+            var type = Type.GetType($"WpfAppListBindingTest.{typeName}");
+            SubContent = Activator.CreateInstance(type) as FrameworkElement;
+        }
 
         [ICommand]
-        async Task ChangeSubContent()
+        async Task BubblingEvent(System.Windows.Input.KeyEventArgs args)
         {
-            if (_subContentIndex % 2 == 0)
-            {
-                SubContent = new SubWindow();
-            }
-            else
-            {
-                SubContent = new SubWindow2();
-            }
-            _subContentIndex++;
+            Debug.Write($"{args.Key} ");
+            eventString = DateTime.Now.ToString();
         }
     }
 

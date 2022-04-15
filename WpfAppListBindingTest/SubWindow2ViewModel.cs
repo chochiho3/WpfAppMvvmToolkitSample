@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
 using System;
@@ -23,6 +24,12 @@ namespace WpfAppListBindingTest
                     RecvMsg += $":{m}";
                 }
             );
+        }
+
+        [ICommand]
+        async Task TestFunc()
+        {
+            System.Diagnostics.Debug.Write("Test Func");
         }
     }
 }
