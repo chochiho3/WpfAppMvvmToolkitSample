@@ -107,7 +107,12 @@ namespace WpfAppListBindingTest
         [ICommand]
         private async Task SetSubView(string typeName)
         {
-            await Task.Delay(1000);
+            await Task.Delay(500);
+            if (string.IsNullOrEmpty(typeName))
+            {
+                SubContent = null;
+                return;
+            }
             //Type만 가지고 동적으로 객체생성해주는 Activator
             var type = Type.GetType($"WpfAppListBindingTest.{typeName}");
             SubContent = Activator.CreateInstance(type) as FrameworkElement;

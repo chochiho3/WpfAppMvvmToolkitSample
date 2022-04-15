@@ -19,6 +19,7 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="KeyDown">
+            <!--완전 꿀팁!!  PassEventArgsToCommand-->
             <i:InvokeCommandAction Command="{Binding BubblingEventCommand}" PassEventArgsToCommand="True"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
@@ -99,6 +100,7 @@
         <StackPanel Grid.Row="2">
             <Button Command="{Binding SetSubViewCommand}" CommandParameter="SubWindow">서브컨텐츠 변경 A</Button>
             <Button Command="{Binding SetSubViewCommand}" CommandParameter="SubWindow2">서브컨텐츠 변경 B</Button>
+            <Button Command="{Binding SetSubViewCommand}" CommandParameter="">서브컨텐츠 삭제</Button>
         </StackPanel>
         <ContentControl Grid.Row="3" Content="{Binding SubContent}" />
     </Grid>
