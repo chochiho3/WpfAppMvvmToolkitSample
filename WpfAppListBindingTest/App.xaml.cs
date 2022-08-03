@@ -12,6 +12,7 @@ namespace WpfAppListBindingTest
 {
     /// <summary>
     /// Interaction logic for App.xaml
+    /// https://docs.microsoft.com/ko-kr/dotnet/communitytoolkit/mvvm/
     /// </summary>
     public partial class App : Application
     {

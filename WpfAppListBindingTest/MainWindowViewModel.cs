@@ -12,9 +12,6 @@ using System.Windows;
 
 namespace WpfAppListBindingTest
 {
-    //이건 아직 확인이 잘 안됨... 추가 확인 필요.
-    //[INotifyPropertyChanged]
-    //internal partial class MainWindowViewModel
     internal partial class MainWindowViewModel : ObservableValidator
     {
         readonly ClientTcp _tcpClient;
@@ -24,15 +21,15 @@ namespace WpfAppListBindingTest
 
         [ObservableProperty]
         [Required]
-        [AlsoNotifyChangeFor(nameof(FullAddress))]
-        [AlsoNotifyCanExecuteFor(nameof(ConnectToServerCommand))]
+        [NotifyPropertyChangedFor(nameof(FullAddress))]
+        [NotifyCanExecuteChangedFor(nameof(ConnectToServerCommand))]
         [CustomValidation(typeof(ValidatorBundle), nameof(ValidatorBundle.CustomValidation))]
         string _ipAddress;
 
         [ObservableProperty]
         [Required]
-        [AlsoNotifyChangeFor(nameof(FullAddress))]
-        [AlsoNotifyCanExecuteFor(nameof(ConnectToServerCommand))]
+        [NotifyPropertyChangedFor(nameof(FullAddress))]
+        [NotifyCanExecuteChangedFor(nameof(ConnectToServerCommand))]
         int? _port;
 
         public string FullAddress => $"{IpAddress}:{Port}";
@@ -67,13 +64,13 @@ namespace WpfAppListBindingTest
 
         bool IsCanTryConnect => IPAddress.TryParse(_ipAddress, out var temp) && _port > 0;
 
-        [ICommand]
+        [RelayCommand]
         void ClearLogs() => LogObjs.Clear();
 
-        [ICommand]
+        [RelayCommand]
         void CheckValidation() => ValidateAllProperties();
 
-        [ICommand(CanExecute = nameof(IsCanTryConnect))]
+        [RelayCommand(CanExecute = nameof(IsCanTryConnect))]
         async Task ConnectToServer()
         {
             ValidateAllProperties();
@@ -83,28 +80,28 @@ namespace WpfAppListBindingTest
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         async Task DisconnectFromServer() => await _tcpClient.ServiceStop();
 
-        [ICommand]
+        [RelayCommand]
         void DeleteOneItem(LogObj target) => LogObjs.Remove(target);
 
         int cnt = 0;
 
-        [ICommand]
+        [RelayCommand]
         async Task<string> CommandReturn()
         {
             await Task.Delay(1000);
             return $"Hello!!! 1000 ms 지났다아아아!!!! {cnt++}";
         }
 
-        [ICommand]
+        [RelayCommand]
         async Task SendMessage(string msg)
         {
             WeakReferenceMessenger.Default.Send<string>(msg);
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task SetSubView(string typeName)
         {
             await Task.Delay(500);
@@ -118,7 +115,7 @@ namespace WpfAppListBindingTest
             SubContent = Activator.CreateInstance(type) as FrameworkElement;
         }
 
-        [ICommand]
+        [RelayCommand]
         async Task BubblingEvent(System.Windows.Input.KeyEventArgs args)
         {
             Debug.Write($"{args.Key} ");
@@ -137,7 +134,7 @@ namespace WpfAppListBindingTest
         [ObservableProperty]
         string _writer;
 
-        [ICommand]
+        [RelayCommand]
         async Task AddString()
         {
             await Task.Delay(1000);

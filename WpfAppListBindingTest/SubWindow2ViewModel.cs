@@ -9,13 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfAppListBindingTest
-{
+{    
     internal partial class SubWindow2ViewModel : ObservableValidator
     {
+        private readonly ClientTcp cli;
+
         [ObservableProperty]
         string _recvMsg;
 
-        public SubWindow2ViewModel()
+        public SubWindow2ViewModel(ClientTcp cli)
         {
             WeakReferenceMessenger.Default.Register<string>(
                 this,
@@ -24,9 +26,11 @@ namespace WpfAppListBindingTest
                     RecvMsg += $":{m}";
                 }
             );
+            this.cli = cli;
+            cli.OnRecvMsg += (s, e) => RecvMsg += $"Sock:{e}";
         }
 
-        [ICommand]
+        [RelayCommand]
         async Task TestFunc()
         {
             System.Diagnostics.Debug.Write("Test Func");
