@@ -20,10 +20,11 @@ namespace WpfAppListBindingTest
     /// </summary>
     public partial class SubWindow2 : UserControl
     {
-        public SubWindow2()
+        public SubWindow2(SubWindow2ViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = App.Current.Services.GetService(typeof(SubWindow2ViewModel));
+            //DataContext = App.Current.Services.GetService(typeof(SubWindow2ViewModel));
+            DataContext = viewModel;
         }
     }
 }

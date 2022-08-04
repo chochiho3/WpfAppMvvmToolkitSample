@@ -20,10 +20,11 @@ namespace WpfAppListBindingTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(MainWindowViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = App.Current.Services.GetService(typeof(MainWindowViewModel));
+            //DataContext = App.Current.Services.GetService(typeof(MainWindowViewModel));
+            DataContext = viewModel;
         }
     }
 }

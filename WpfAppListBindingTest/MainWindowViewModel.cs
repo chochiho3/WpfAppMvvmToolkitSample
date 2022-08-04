@@ -15,7 +15,7 @@ using System.Windows;
 
 namespace WpfAppListBindingTest
 {
-    internal partial class MainWindowViewModel : ObservableValidator
+    public partial class MainWindowViewModel : ObservableValidator
     {
         readonly ClientTcp _tcpClient;
 

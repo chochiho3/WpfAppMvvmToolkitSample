@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace WpfAppListBindingTest
 {    
-    internal partial class SubWindow2ViewModel : ObservableValidator
+    public partial class SubWindow2ViewModel : ObservableValidator
     {
         private readonly ClientTcp cli;
 
