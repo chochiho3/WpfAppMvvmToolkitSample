@@ -12,15 +12,41 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview4" />
 		<PackageReference Include="MaterialDesignThemes" Version="4.4.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="NetCoreServer" Version="6.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Resources\Resource.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resource.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\Resource.kr.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resource.kr.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Resource.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Resource.kr.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resource.kr.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
 		<!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
 
 		<ItemGroup>
-			<FilteredAnalyzer Include="@(Analyzer->Distinct())" />
+			<FilteredAnalyzer Include="@(Analyzer-&gt;Distinct())" />
 			<Analyzer Remove="@(Analyzer)" />
 			<Analyzer Include="@(FilteredAnalyzer)" />
 		</ItemGroup>

@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:WpfAppListBindingTest"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:WpfAppListBindingTest.Resources"
     Title="MainWindow"
     Width="1024"
     Height="900"
@@ -19,8 +20,8 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="KeyDown">
-            <!--완전 꿀팁!!  PassEventArgsToCommand-->
-            <i:InvokeCommandAction Command="{Binding BubblingEventCommand}" PassEventArgsToCommand="True"/>
+            <!--  완전 꿀팁!!  PassEventArgsToCommand  -->
+            <i:InvokeCommandAction Command="{Binding BubblingEventCommand}" PassEventArgsToCommand="True" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
@@ -33,20 +34,20 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="200" />
         </Grid.ColumnDefinitions>
-
         <materialDesign:Card Grid.Row="0" Grid.Column="0">
             <StackPanel Margin="10">
                 <TextBlock Margin="5" Text="{Binding FullAddress}" />
                 <TextBox
                     Margin="5"
-                    materialDesign:HintAssist.Hint="Server IP Address"
-                    Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" Cursor="Arrow" />
+                    materialDesign:HintAssist.Hint="{x:Static res:Resource.HintIpAddr}"
+                    Cursor="Arrow"
+                    Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox
                     Margin="5"
-                    materialDesign:HintAssist.Hint="Server Port Number"
+                    materialDesign:HintAssist.Hint="{x:Static res:Resource.HintIpPort}"
                     Cursor="Arrow"
                     Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -56,19 +57,29 @@
                     Content="{Binding CommandReturnCommand.ExecutionTask, Converter={StaticResource ConvTaskResult}}" />
                 <TextBlock Text="{Binding CommandReturnCommand.ExecutionTask.Status}" />
 
-                <Button Margin="5" Command="{Binding ConnectToServerCommand}">Connect</Button>
+                <Button
+                    Margin="5"
+                    Command="{Binding ConnectToServerCommand}"
+                    Content="{x:Static res:Resource.ButtonConnect}"
+                    Cursor="Hand" />
                 <Button
                     Margin="5"
                     Command="{Binding CheckValidationCommand}"
-                    Cursor="Hand">
-                    Valid
-                </Button>
+                    Content="{x:Static res:Resource.ButtonValid}"
+                    Cursor="Hand" />
 
-                <TextBox Name="SubWindowMsg" materialDesign:HintAssist.Hint="sub window에 보낼 메세지를 입력하세요." />
+
+                <TextBox
+                    Name="SubWindowMsg"
+                    materialDesign:HintAssist.Hint="{x:Static res:Resource.HintSendSubControl}"
+                    Cursor="Arrow" />
                 <Button Command="{Binding SendMessageCommand}" CommandParameter="{Binding ElementName=SubWindowMsg, Path=Text}">Send To SubWindow</Button>
             </StackPanel>
         </materialDesign:Card>
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding LogObjs}">
+        <ListBox
+            Grid.Row="1"
+            Grid.Column="0"
+            ItemsSource="{Binding LogObjs}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -107,8 +118,11 @@
             <Button Command="{Binding SetSubViewCommand}" CommandParameter="SubWindow2">서브컨텐츠 변경 B</Button>
             <Button Command="{Binding SetSubViewCommand}" CommandParameter="">서브컨텐츠 삭제</Button>
         </StackPanel>
-        <ContentControl Grid.Row="3" Grid.Column="0" Content="{Binding SubContent}" />
+        <ContentControl
+            Grid.Row="3"
+            Grid.Column="0"
+            Content="{Binding SubContent}" />
 
-        
+
     </Grid>
 </Window>

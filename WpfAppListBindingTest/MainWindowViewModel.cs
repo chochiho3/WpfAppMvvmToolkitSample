@@ -2,11 +2,14 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -110,9 +113,10 @@ namespace WpfAppListBindingTest
                 SubContent = null;
                 return;
             }
-            //Type만 가지고 동적으로 객체생성해주는 Activator
             var type = Type.GetType($"WpfAppListBindingTest.{typeName}");
-            SubContent = Activator.CreateInstance(type) as FrameworkElement;
+            //Type만 가지고 동적으로 객체생성해주는 Activator
+            //SubContent = Activator.CreateInstance(type) as FrameworkElement;
+            SubContent = App.Current.Services.GetRequiredService(type) as FrameworkElement;
         }
 
         [RelayCommand]
