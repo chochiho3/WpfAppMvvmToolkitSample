@@ -40,6 +40,15 @@ namespace WpfAppListBindingTest
         [ObservableProperty]
         FrameworkElement _subContent;
 
+        partial void OnSubContentChanged(FrameworkElement value)
+        {
+            //throw new NotImplementedException();
+        }
+        partial void OnSubContentChanging(FrameworkElement value)
+        {
+            //throw new NotImplementedException();
+        }
+
         [ObservableProperty]
         string eventString;
 
